@@ -1,0 +1,7 @@
+.DS_Store
+node_modules
+*.log
+dist/frampton-history-tests.js
+docs/fonts
+notes.txt
+tmp
