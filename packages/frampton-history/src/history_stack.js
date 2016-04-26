@@ -1,6 +1,9 @@
 import last from 'frampton-list/last';
 import depth from 'frampton-history/depth';
-import stackStream from 'frampton-history/stack_stream';
+import stack from 'frampton-history/stack_signal';
+
+const depthSignal = depth();
+const stackSignal = stack();
 
 /**
  * The current state of the application history.
@@ -10,7 +13,7 @@ import stackStream from 'frampton-history/stack_stream';
  * @memberof Frampton.History
  * @type {Object}
  */
-var stack = {
+var state = {
   currentState : null,
   currentId : 0,
   _store : []
@@ -27,11 +30,11 @@ var stack = {
  * @param {Object} newState
  */
 var pushHistory = function push_state(newState) {
-  stack._store.push(newState);
-  stack.currentState = newState;
-  stack.currentId = newState.id;
-  depth().update(stack._store.length);
-  stackStream().pushNext(null);
+  state._store.push(newState);
+  state.currentState = newState;
+  state.currentId = newState.id;
+  depthSignal(state._store.length);
+  stackSignal(null);
 };
 
 /**
@@ -44,9 +47,9 @@ var pushHistory = function push_state(newState) {
  * @param {Object} newState
  */
 var replaceHistory = function replace_state(newState) {
-  stack.currentState = newState;
-  stack.currentId = newState.id;
-  stackStream().pushNext(null);
+  state.currentState = newState;
+  state.currentId = newState.id;
+  stackSignal(null);
 };
 
 /**
@@ -59,15 +62,15 @@ var replaceHistory = function replace_state(newState) {
  * @memberof Frampton.History
  */
 var popHistory = function pop_history() {
-  stack._store.pop();
-  stack.currentState = last(stack._store);
-  stack.currentId = ((stack.currentState) ? stack.currentState.id : 0);
-  depth().update(stack._store.length);
-  stackStream().pushNext(null);
+  state._store.pop();
+  state.currentState = last(state._store);
+  state.currentId = ((state.currentState) ? state.currentState.id : 0);
+  depthSignal(state._store.length);
+  stackSignal(null);
 };
 
 export {
-  stack,
+  state as stack,
   pushHistory,
   replaceHistory,
   popHistory

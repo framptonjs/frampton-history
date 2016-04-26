@@ -1,20 +1,20 @@
-import stepper from 'frampton-signals/stepper';
+import stepper from 'frampton-signal/stepper';
 import location from 'frampton-history/get_location';
-import pathStream from 'frampton-history/path_stream';
+import pathSignal from 'frampton-history/path_signal';
 
 var instance = null;
 
 /**
- * A Behavior representing the current location.pathname
+ * A Signal representing the current location.pathname
  *
  * @name path
  * @method
  * @memberof Frampton.History
- * @returns {Frampton.Signals.Behavior}
+ * @returns {Frampton.Signal.Signal}
  */
 export default function path() {
   if (!instance) {
-    instance = stepper(location().pathname, pathStream());
+    instance = stepper(location().pathname, pathSignal());
   }
   return instance;
 }

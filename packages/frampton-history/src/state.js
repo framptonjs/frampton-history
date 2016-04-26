@@ -1,20 +1,21 @@
-import stepper from 'frampton-signals/stepper';
+import isNothing from 'frampton-utils/is_nothing';
+import stepper from 'frampton-signal/stepper';
 import history from 'frampton-history/get_history';
-import stateStream from 'frampton-history/state_stream';
+import stateSignal from 'frampton-history/state_signal';
 
 var instance = null;
 
 /**
- * A Behavior representing the current history.state
+ * A Signal representing the current history.state
  *
  * @name state
  * @method
  * @memberof Frampton.History
- * @returns {Frampton.Signals.Behavior}
+ * @returns {Frampton.Signal.Signal}
  */
 export default function state() {
-  if (!instance) {
-    instance = stepper(history().state, stateStream());
+  if (isNothing(instance)) {
+    instance = stepper(history().state, stateSignal());
   }
   return instance;
 }

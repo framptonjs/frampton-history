@@ -1,4 +1,4 @@
-import historyStream from 'frampton-history/history_stream';
+import history from 'frampton-history/history_signal';
 
 /**
  * @name historyChange
@@ -8,5 +8,5 @@ import historyStream from 'frampton-history/history_stream';
  * @return {Function} A function to unsubscribe from changes
  */
 export default function history_change(fn) {
-  return historyStream().next(fn);
+  return history().next(fn);
 }

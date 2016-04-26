@@ -1,4 +1,4 @@
-import constant from 'frampton-signals/constant';
+import create from 'frampton-signal/create';
 
 var instance = null;
 
@@ -8,11 +8,11 @@ var instance = null;
  * @name depth
  * @method
  * @memberof Frampton.History
- * @returns {Frampton.Signals.Behavior}
+ * @returns {Frampton.Signal.Signal}
  */
 export default function depth() {
   if (!instance) {
-    instance = constant(0);
+    instance = create(0);
   }
   return instance;
 }

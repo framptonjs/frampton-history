@@ -15,7 +15,7 @@ import path from 'frampton-history/path';
  * @memberof Frampton
  */
 Frampton.History = {};
-Frampton.History.VERSION      = '0.0.1';
+Frampton.History.VERSION      = '0.0.2';
 Frampton.History.pushState    = pushState;
 Frampton.History.replaceState = replaceState;
 Frampton.History.setHash      = setHash;

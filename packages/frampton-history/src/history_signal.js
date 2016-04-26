@@ -1,20 +1,20 @@
 import isNothing from 'frampton-utils/is_nothing';
 import history from 'frampton-history/get_history';
-import stack from 'frampton-history/stack_stream';
-import popstate from 'frampton-history/popstate_stream';
+import stack from 'frampton-history/stack_signal';
+import popstate from 'frampton-history/popstate_signal';
 
 var instance = null;
 
 /**
- * Returns a stream of the current window.history
+ * Returns a Signal of the current window.history
  *
- * @name historyStream
+ * @name historySignal
  * @method
  * @private
  * @memberof Frampton.History
- * @returns {Frampton.Signals.EventStream}
+ * @returns {Frampton.Signal.Signal}
  */
-export default function history_stream() {
+export default function history_signal() {
 
   if (isNothing(instance)) {
     instance = stack().merge(popstate()).map(() => history());

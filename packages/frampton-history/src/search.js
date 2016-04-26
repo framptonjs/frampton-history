@@ -1,23 +1,23 @@
-import stepper from 'frampton-signals/stepper';
+import stepper from 'frampton-signal/stepper';
 import location from 'frampton-history/get_location';
-import searchStream from 'frampton-history/search_stream';
+import searchSignal from 'frampton-history/search_signal';
 import parseSearch from 'frampton-history/parse_search';
 
 var instance = null;
 
 /**
- * A Behavior representing the current location.search
+ * A Signal representing the current location.search
  *
  * @name search
  * @method
  * @memberof Frampton.History
- * @returns {Frampton.Signals.Behavior}
+ * @returns {Frampton.Signal.Signal}
  */
 export default function search() {
   if (!instance) {
     instance = stepper(
       parseSearch(location().search || ''),
-      searchStream()
+      searchSignal()
     );
   }
   return instance;
