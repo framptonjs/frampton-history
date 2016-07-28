@@ -1,6 +1,10 @@
 import isNothing from 'frampton-utils/is_nothing';
 import onEvent from 'frampton-events/on_event';
-import { popHistory, pushHistory, stack } from 'frampton-history/history_stack';
+import {
+  popHistory,
+  pushHistory,
+  stack
+} from 'frampton-history/history_stack';
 
 var instance = null;
 

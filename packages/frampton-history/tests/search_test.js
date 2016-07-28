@@ -2,7 +2,9 @@ import search from 'frampton-history/search';
 
 QUnit.module('Frampton.History.search');
 
-QUnit.test('Should return a Signal with correct initial value', function() {
+QUnit.test('Should return a Signal with correct initial value', function(assert) {
   const s = search();
-  deepEqual(s(), { test : 'true' });
+  const actual = s();
+  const expected = { test : 'true' };
+  assert.deepEqual(actual, expected);
 });

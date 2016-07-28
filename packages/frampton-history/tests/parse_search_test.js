@@ -2,36 +2,40 @@ import parseSearch from 'frampton-history/parse_search';
 
 QUnit.module('Frampton.History.parseSearch');
 
-QUnit.test('should correctly parse query string', function() {
-  var str = '?key1=test1&key2=test2&key3=test3';
-  var obj = {
+QUnit.test('Should correctly parse query string', function(assert) {
+  const str = '?key1=test1&key2=test2&key3=test3';
+  const actual = parseSearch(str);
+  const expected = {
     key1 : 'test1',
     key2 : 'test2',
     key3 : 'test3'
   };
-  deepEqual(parseSearch(str), obj);
+  assert.deepEqual(actual, expected);
 });
 
-QUnit.test('should return empty object for empty string', function() {
-  var str = '';
-  var obj = {};
-  deepEqual(parseSearch(str), obj);
+QUnit.test('Should return empty object for empty string', function(assert) {
+  const str = '';
+  const actual = parseSearch(str);
+  const expected = {};
+  assert.deepEqual(actual, expected);
 });
 
-QUnit.test('should ignore malformed pairs', function() {
-  var str = '?key1-test1&key2=test2&key3=test3';
-  var obj = {
+QUnit.test('Should ignore malformed pairs', function(assert) {
+  const str = '?key1-test1&key2=test2&key3=test3';
+  const actual = parseSearch(str);
+  const expected = {
     key2 : 'test2',
     key3 : 'test3'
   };
-  deepEqual(parseSearch(str), obj);
+  assert.deepEqual(actual, expected);
 });
 
-QUnit.test('should ignore empty values', function() {
-  var str = '?key1=&key2=test2&key3=test3';
-  var obj = {
+QUnit.test('should ignore empty values', function(assert) {
+  const str = '?key1=&key2=test2&key3=test3';
+  const actual = parseSearch(str);
+  const expected = {
     key2 : 'test2',
     key3 : 'test3'
   };
-  deepEqual(parseSearch(str), obj);
+  assert.deepEqual(actual, expected);
 });

@@ -13,7 +13,7 @@ const stackSignal = stack();
  * @memberof Frampton.History
  * @type {Object}
  */
-var state = {
+const state = {
   currentState : null,
   currentId : 0,
   _store : []
@@ -29,7 +29,7 @@ var state = {
  * @memberof Frampton.History
  * @param {Object} newState
  */
-var pushHistory = function push_state(newState) {
+const pushHistory = function push_state(newState) {
   state._store.push(newState);
   state.currentState = newState;
   state.currentId = newState.id;
@@ -61,7 +61,7 @@ var replaceHistory = function replace_state(newState) {
  * @private
  * @memberof Frampton.History
  */
-var popHistory = function pop_history() {
+const popHistory = function pop_history() {
   state._store.pop();
   state.currentState = last(state._store);
   state.currentId = ((state.currentState) ? state.currentState.id : 0);
