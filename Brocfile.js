@@ -1,10 +1,10 @@
-var FramptonBuild = require('frampton-build');
-var packages = {
+const FramptonBuild = require('frampton-build');
+const packages = {
   'frampton-history' : { trees: null }
 }
 
-var build = new FramptonBuild({
-  name     : 'frampton-history',
+const build = new FramptonBuild({
+  name : 'frampton-history',
   packages : packages
 });
 

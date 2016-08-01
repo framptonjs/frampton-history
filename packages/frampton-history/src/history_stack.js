@@ -1,9 +1,6 @@
 import last from 'frampton-list/last';
-import depth from 'frampton-history/depth';
-import stack from 'frampton-history/stack_signal';
-
-const depthSignal = depth();
-const stackSignal = stack();
+import depth from 'frampton-history/signals/depth';
+import stack from 'frampton-history/signals/stack';
 
 /**
  * The current state of the application history.
@@ -33,8 +30,8 @@ const pushHistory = function push_state(newState) {
   state._store.push(newState);
   state.currentState = newState;
   state.currentId = newState.id;
-  depthSignal(state._store.length);
-  stackSignal(null);
+  depth.push(state._store.length);
+  stack.push(null);
 };
 
 /**
@@ -46,10 +43,10 @@ const pushHistory = function push_state(newState) {
  * @memberof Frampton.History
  * @param {Object} newState
  */
-var replaceHistory = function replace_state(newState) {
+const replaceHistory = function replace_state(newState) {
   state.currentState = newState;
   state.currentId = newState.id;
-  stackSignal(null);
+  stack.push(null);
 };
 
 /**
@@ -65,8 +62,8 @@ const popHistory = function pop_history() {
   state._store.pop();
   state.currentState = last(state._store);
   state.currentId = ((state.currentState) ? state.currentState.id : 0);
-  depthSignal(state._store.length);
-  stackSignal(null);
+  depth.push(state._store.length);
+  stack.push(null);
 };
 
 export {

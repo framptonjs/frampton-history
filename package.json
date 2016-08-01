@@ -1,14 +1,18 @@
 {
   "name": "frampton-history",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A module for managing browser history with frampton.js",
   "scripts": {
     "test": "frampton test",
     "build": "frampton build",
-    "docs": "rm -rfv docs/* && jsdoc dist/frampton-history.js -d docs --readme README.md  --private"
+    "clean-install": "rm -rfv node_modules; npm install;",
+    "release": "frampton release --patch",
+    "minor-release": "frampton release --minor",
+    "major-release": "frampton release --major",
+    "docs": "rm -rfv docs/* && jsdoc packages/**/src/*.js -d docs --readme README.md  --private"
   },
   "author": "Kevin Greene <hightimesteddy@gmail.com>",
-  "license": "MIT",
+  "license": "BSD",
   "repository": {
     "type": "git",
     "url": "git@github.com:framptonjs/frampton-history.git"
@@ -18,7 +22,9 @@
   },
   "homepage": "https://github.com/framptonjs/frampton-history",
   "devDependencies": {
-    "frampton-build": "0.0.5",
-    "frampton-cli": "0.0.4"
+    "frampton": "0.2.0",
+    "frampton-build": "0.0.6",
+    "frampton-cli": "0.0.9",
+    "jsdoc": "3.4.0"
   }
 }
