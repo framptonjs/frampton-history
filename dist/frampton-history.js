@@ -50,7 +50,7 @@ define('frampton-history', ['frampton/namespace', 'frampton-history/methods/set_
    * @memberof Frampton
    */
   _namespace2.default.History = {};
-  _namespace2.default.History.VERSION = '0.0.3';
+  _namespace2.default.History.VERSION = '0.0.4';
   _namespace2.default.History.pushState = _push_state2.default;
   _namespace2.default.History.replaceState = _replace_state2.default;
   _namespace2.default.History.setHash = _set_hash2.default;
@@ -531,15 +531,17 @@ define('frampton-history/signals/state_base', ['exports', 'frampton-history/sign
     return h.state;
   });
 });
-define('frampton-history/utils/get_history', ['exports', 'frampton/namespace'], function (exports, _namespace) {
+define('frampton-history/utils/get_history', ['exports', 'frampton/namespace', 'frampton-history/utils/get_location'], function (exports, _namespace, _get_location) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = ajax_api;
+  exports.default = history_api;
 
   var _namespace2 = _interopRequireDefault(_namespace);
+
+  var _get_location2 = _interopRequireDefault(_get_location);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -557,6 +559,7 @@ define('frampton-history/utils/get_history', ['exports', 'frampton/namespace'], 
       state: null,
       pushState: function pushState(state, title, url) {
         currentIndex++;
+        (0, _get_location2.default)().pathname = url;
         stack.push({
           state: state,
           title: title,
@@ -564,6 +567,7 @@ define('frampton-history/utils/get_history', ['exports', 'frampton/namespace'], 
         });
       },
       replaceState: function replaceState(state, title, url) {
+        (0, _get_location2.default)().pathname = url;
         stack[currentIndex] = {
           state: state,
           title: title,
@@ -582,7 +586,7 @@ define('frampton-history/utils/get_history', ['exports', 'frampton/namespace'], 
     return mockInstance;
   }
 
-  function ajax_api() {
+  function history_api() {
     if (_namespace2.default.isTest()) {
       return getMockHistory();
     } else {
@@ -596,7 +600,7 @@ define('frampton-history/utils/get_location', ['exports', 'frampton/namespace'],
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = ajax_api;
+  exports.default = location_api;
 
   var _namespace2 = _interopRequireDefault(_namespace);
 
@@ -606,13 +610,26 @@ define('frampton-history/utils/get_location', ['exports', 'frampton/namespace'],
     };
   }
 
-  function ajax_api() {
+  var instance = null;
+
+  function createMockLocation() {
+    return {
+      hash: '',
+      pathname: '/test/path',
+      search: '?test=true'
+    };
+  }
+
+  function getMockLocation() {
+    if (instance === null) {
+      instance = createMockLocation();
+    }
+    return instance;
+  }
+
+  function location_api() {
     if (_namespace2.default.isTest()) {
-      return {
-        hash: '',
-        pathname: '/test/path',
-        search: '?test=true'
-      };
+      return getMockLocation();
     } else {
       return window.location;
     }

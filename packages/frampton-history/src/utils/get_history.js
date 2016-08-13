@@ -1,4 +1,5 @@
 import Frampton from 'frampton/namespace';
+import getLocation from 'frampton-history/utils/get_location';
 
 var mockInstance = null;
 
@@ -10,6 +11,7 @@ function createMockHistory() {
     state : null,
     pushState : function(state, title, url) {
       currentIndex ++;
+      getLocation().pathname = url;
       stack.push({
         state : state,
         title : title,
@@ -17,6 +19,7 @@ function createMockHistory() {
       });
     },
     replaceState : function(state, title, url) {
+      getLocation().pathname = url;
       stack[currentIndex] = {
         state : state,
         title : title,
@@ -35,7 +38,7 @@ function getMockHistory() {
   return mockInstance;
 }
 
-export default function ajax_api() {
+export default function history_api() {
   if (Frampton.isTest()) {
     return getMockHistory();
   } else {
