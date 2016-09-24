@@ -1,5 +1,7 @@
 # Frampton-History
 
+[![Build Status](https://semaphoreci.com/api/v1/beatniklarry/frampton-history/branches/master/badge.svg)](https://semaphoreci.com/beatniklarry/frampton-history)
+
 A module for managing browser history with framptonjs.
 
 ## Responding to History Changes
