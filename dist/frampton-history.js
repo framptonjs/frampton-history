@@ -151,7 +151,7 @@ define('frampton-history/history_stack', ['exports', 'frampton-list/last', 'fram
   exports.replaceHistory = replaceHistory;
   exports.popHistory = popHistory;
 });
-define('frampton-history/methods/history_changes', ['exports', 'frampton-history/signals/history'], function (exports, _history) {
+define('frampton-history/methods/history_changes', ['exports', 'frampton-history/signals/location'], function (exports, _location) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -159,7 +159,7 @@ define('frampton-history/methods/history_changes', ['exports', 'frampton-history
   });
   exports.default = history_change;
 
-  var _history2 = _interopRequireDefault(_history);
+  var _location2 = _interopRequireDefault(_location);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -174,7 +174,7 @@ define('frampton-history/methods/history_changes', ['exports', 'frampton-history
    * @param {Function} fn A function to call when history changes
    */
   function history_change(fn) {
-    _history2.default.next(fn);
+    _location2.default.next(fn);
   }
 });
 define('frampton-history/methods/push_state', ['exports', 'frampton-utils/guid', 'frampton-history/utils/get_history', 'frampton-history/utils/with_valid_state', 'frampton-history/history_stack'], function (exports, _guid, _get_history, _with_valid_state, _history_stack) {
