@@ -50,7 +50,7 @@ define('frampton-history', ['frampton/namespace', 'frampton-history/methods/set_
    * @memberof Frampton
    */
   _namespace2.default.History = {};
-  _namespace2.default.History.VERSION = '0.0.4';
+  _namespace2.default.History.VERSION = '0.0.5';
   _namespace2.default.History.pushState = _push_state2.default;
   _namespace2.default.History.replaceState = _replace_state2.default;
   _namespace2.default.History.setHash = _set_hash2.default;
