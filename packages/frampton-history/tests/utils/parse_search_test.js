@@ -2,7 +2,7 @@ import parseSearch from 'frampton-history/utils/parse_search';
 
 QUnit.module('Frampton.History.Utils.parseSearch');
 
-QUnit.test('Should correctly parse query string', function(assert) {
+QUnit.test('correctly parses query string', function(assert) {
   const str = '?key1=test1&key2=test2&key3=test3';
   const actual = parseSearch(str);
   const expected = {
@@ -13,14 +13,14 @@ QUnit.test('Should correctly parse query string', function(assert) {
   assert.deepEqual(actual, expected);
 });
 
-QUnit.test('Should return empty object for empty string', function(assert) {
+QUnit.test('returns empty object for empty string', function(assert) {
   const str = '';
   const actual = parseSearch(str);
   const expected = {};
   assert.deepEqual(actual, expected);
 });
 
-QUnit.test('Should ignore malformed pairs', function(assert) {
+QUnit.test('ignores malformed pairs', function(assert) {
   const str = '?key1-test1&key2=test2&key3=test3';
   const actual = parseSearch(str);
   const expected = {
@@ -30,7 +30,7 @@ QUnit.test('Should ignore malformed pairs', function(assert) {
   assert.deepEqual(actual, expected);
 });
 
-QUnit.test('Should ignore empty values', function(assert) {
+QUnit.test('ignores empty values', function(assert) {
   const str = '?key1=&key2=test2&key3=test3';
   const actual = parseSearch(str);
   const expected = {
