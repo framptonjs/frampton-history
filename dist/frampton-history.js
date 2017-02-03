@@ -177,18 +177,18 @@ define('frampton-history/methods/history_changes', ['exports', 'frampton-history
     _location2.default.next(fn);
   }
 });
-define('frampton-history/methods/push_state', ['exports', 'frampton-utils/guid', 'frampton-history/utils/get_history', 'frampton-history/utils/with_valid_state', 'frampton-history/history_stack'], function (exports, _guid, _get_history, _with_valid_state, _history_stack) {
+define('frampton-history/methods/push_state', ['exports', 'frampton-data/task/create', 'frampton-utils/guid', 'frampton-history/utils/get_history', 'frampton-history/history_stack'], function (exports, _create, _guid, _get_history, _history_stack) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
+  var _create2 = _interopRequireDefault(_create);
+
   var _guid2 = _interopRequireDefault(_guid);
 
   var _get_history2 = _interopRequireDefault(_get_history);
-
-  var _with_valid_state2 = _interopRequireDefault(_with_valid_state);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -196,24 +196,27 @@ define('frampton-history/methods/push_state', ['exports', 'frampton-utils/guid',
     };
   }
 
-  exports.default = (0, _with_valid_state2.default)(function push_state(state) {
-    state.id = (0, _guid2.default)();
-    (0, _get_history2.default)().pushState(state, state.name, state.path);
-    (0, _history_stack.pushHistory)(state);
-  });
+  exports.default = function (state) {
+    return (0, _create2.default)(function (sinks) {
+      state.id = (0, _guid2.default)();
+      (0, _get_history2.default)().pushState(state, state.name, state.path);
+      (0, _history_stack.pushHistory)(state);
+      sinks.resolve(null);
+    });
+  };
 });
-define('frampton-history/methods/replace_state', ['exports', 'frampton-utils/guid', 'frampton-history/utils/get_history', 'frampton-history/utils/with_valid_state', 'frampton-history/history_stack'], function (exports, _guid, _get_history, _with_valid_state, _history_stack) {
+define('frampton-history/methods/replace_state', ['exports', 'frampton-data/task/create', 'frampton-utils/guid', 'frampton-history/utils/get_history', 'frampton-history/history_stack'], function (exports, _create, _guid, _get_history, _history_stack) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
+  var _create2 = _interopRequireDefault(_create);
+
   var _guid2 = _interopRequireDefault(_guid);
 
   var _get_history2 = _interopRequireDefault(_get_history);
-
-  var _with_valid_state2 = _interopRequireDefault(_with_valid_state);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -221,11 +224,14 @@ define('frampton-history/methods/replace_state', ['exports', 'frampton-utils/gui
     };
   }
 
-  exports.default = (0, _with_valid_state2.default)(function replace_state(state) {
-    state.id = (0, _guid2.default)();
-    (0, _get_history2.default)().replaceState(state, state.name, state.path);
-    (0, _history_stack.replaceHistory)(state);
-  });
+  exports.default = function (state) {
+    return (0, _create2.default)(function (sinks) {
+      state.id = (0, _guid2.default)();
+      (0, _get_history2.default)().replaceState(state, state.name, state.path);
+      (0, _history_stack.replaceHistory)(state);
+      sinks.resolve(null);
+    });
+  };
 });
 define('frampton-history/methods/set_hash', ['exports', 'frampton-history/history_stack'], function (exports, _history_stack) {
   'use strict';
@@ -721,79 +727,6 @@ define('frampton-history/utils/uri_decode', ['exports', 'frampton-utils/memoize'
   exports.default = (0, _memoize2.default)(function uri_decode(str) {
     return decodeURIComponent(str);
   });
-});
-define('frampton-history/utils/valid_state', ['exports', 'frampton-utils/is_object', 'frampton-utils/is_string'], function (exports, _is_object, _is_string) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = valid_state;
-
-  var _is_object2 = _interopRequireDefault(_is_object);
-
-  var _is_string2 = _interopRequireDefault(_is_string);
-
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
-
-  /**
-   * Internally we require all state objects to have a name and path. This
-   * checks a state object to ensure it meets those requirements.
-   *
-   * @name validState
-   * @method
-   * @private
-   * @memberof Frampton.History
-   * @param {Object} state
-   * @returns {Boolean}
-   */
-  function valid_state(state) {
-    return !!((0, _is_object2.default)(state) && (0, _is_string2.default)(state.path));
-  }
-});
-define('frampton-history/utils/with_valid_state', ['exports', 'frampton-utils/assert', 'frampton-history/utils/valid_state'], function (exports, _assert, _valid_state) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = with_valid_state;
-
-  var _assert2 = _interopRequireDefault(_assert);
-
-  var _valid_state2 = _interopRequireDefault(_valid_state);
-
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
-
-  /**
-   * Validates that the given function recieves a valid state object as its
-   * sole argument.
-   *
-   * @name withValidState
-   * @method
-   * @private
-   * @memberof Frampton.History
-   * @param {Function} fn Function whose argument to validate
-   * @returns {Function} A function that will throw an error if it is not
-   * passed a valid state.
-   */
-  function with_valid_state(fn) {
-    return function (state) {
-      (0, _assert2.default)('State not valid', (0, _valid_state2.default)(state));
-      fn({
-        path: state.path,
-        name: state.name || ''
-      });
-    };
-  }
 });
 require("frampton-history");
 })();
